@@ -2,10 +2,17 @@ import React, {useState} from "react";
 import API from "../API";
 import User from "./user";
 import SearchStatus from "./searchStatus";
+import Pagination from "./pagination";
 
 
 const Users = () => {
     const [users, setUsers] = useState(API.users.fetchAll());
+
+    const count = users.length;
+    const pageSize = 4;
+    const handlePageChange = (pageIndex) => {
+        console.log("page" , pageIndex)
+    }
 
     const deleteUser = (id) => {
         const newUsers = users.filter(user => user._id !== id);
@@ -27,7 +34,7 @@ const Users = () => {
 
     return(
         <>
-        <SearchStatus  number ={users.length}/>
+        <SearchStatus count ={users.length}/>
         <table className="table">
             <thead>
                 <tr>
@@ -42,7 +49,8 @@ const Users = () => {
             <tbody> 
                 {users.map(user => <User key={user._id} user={user} onDelete = {deleteUser} onChangeUser={onChangeUser}/>)}
             </tbody>
-        </table>    
+        </table> 
+        <Pagination itemsCount = {count} pageSize = {pageSize} onPageChange = {handlePageChange}/>   
         </>
         )
 }
