@@ -1,20 +1,33 @@
 import React, {useState} from "react";
 import API from "../API";
 import User from "./user";
+import SearchStatus from "./searchStatus";
 
 
 const Users = () => {
     const [users, setUsers] = useState(API.users.fetchAll());
 
     const deleteUser = (id) => {
-        debugger
         const newUsers = users.filter(user => user._id !== id);
 
         setUsers(newUsers)
     }
 
+    const onChangeUser = (newUser) => {
+        const newUsers = users.map(user => {
+            if (user._id === newUser._id) {
+                return newUser;
+            }
+
+            return user;
+        });
+
+        setUsers(newUsers);
+    }
+
     return(
         <>
+        <SearchStatus  number ={users.length}/>
         <table className="table">
             <thead>
                 <tr>
@@ -27,7 +40,7 @@ const Users = () => {
                 </tr>
             </thead>
             <tbody> 
-                {users.map(user => <User key={user._id} user={user} onDelete = {deleteUser}/>)}
+                {users.map(user => <User key={user._id} user={user} onDelete = {deleteUser} onChangeUser={onChangeUser}/>)}
             </tbody>
         </table>    
         </>
