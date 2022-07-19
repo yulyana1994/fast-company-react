@@ -3,6 +3,8 @@ import API from "../API";
 import User from "./user";
 import SearchStatus from "./searchStatus";
 import Pagination from "./pagination";
+import { noConflict } from "lodash";
+import { paginate } from "../utils/paginate";
 
 
 const Users = () => {
@@ -10,9 +12,14 @@ const Users = () => {
 
     const count = users.length;
     const pageSize = 4;
+    const [currentPage, setCurrentPage] = useState(1);
+
     const handlePageChange = (pageIndex) => {
-        console.log("page" , pageIndex)
+        setCurrentPage(pageIndex)
     }
+
+
+   const userCropp = paginate(users, currentPage, pageSize)
 
     const deleteUser = (id) => {
         const newUsers = users.filter(user => user._id !== id);
@@ -25,7 +32,6 @@ const Users = () => {
             if (user._id === newUser._id) {
                 return newUser;
             }
-
             return user;
         });
 
@@ -47,10 +53,14 @@ const Users = () => {
                 </tr>
             </thead>
             <tbody> 
-                {users.map(user => <User key={user._id} user={user} onDelete = {deleteUser} onChangeUser={onChangeUser}/>)}
+                {userCropp.map(user => <User key={user._id} user={user} onDelete = {deleteUser} onChangeUser={onChangeUser}/>)}
             </tbody>
         </table> 
-        <Pagination itemsCount = {count} pageSize = {pageSize} onPageChange = {handlePageChange}/>   
+        <Pagination 
+                itemsCount = {count}  
+                pageSize = {pageSize} 
+                currentPage = {currentPage}
+                onPageChange = {handlePageChange}/>   
         </>
         )
 }
