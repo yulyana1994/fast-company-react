@@ -2,7 +2,6 @@ import React from "react";
 import PropTypes from "prop-types";
 
 const GroupList = ({ items, valuePropertry, contentProperty, onItemSelect, selectedItem }) => {
-    console.log(Object.keys(items));
     return (
         <ul className="list-group">
             {Object.keys(items).map((item) => (
@@ -26,7 +25,7 @@ GroupList.defaultProps = {
 };
 
 GroupList.propTypes = {
-    items: PropTypes.object.isRequired,
+    items: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
     valuePropertry: PropTypes.string.isRequired,
     contentProperty: PropTypes.string.isRequired,
     onItemSelect: PropTypes.func,
