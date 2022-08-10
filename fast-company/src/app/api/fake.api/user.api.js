@@ -157,5 +157,6 @@ const getById = (id) =>
     }, 500);
 });
 export default {
-    fetchAll
+    fetchAll,
+    getById
 };
