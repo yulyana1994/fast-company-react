@@ -19,13 +19,17 @@ module.exports = {
       "error",
       { anonymous: "always", named: "never" },
     ],
-    "comma-dangle": ["error", {
-      "arrays": "never",
-      "objects": "only-multiline",
-      "imports": "never",
-      "exports": "never",
-      "functions": "never"
-  }],
+    "comma-dangle": [
+      "error",
+      {
+        arrays: "never",
+        objects: "only-multiline",
+        imports: "never",
+        exports: "never",
+        functions: "never",
+      },
+    ],
+    "multiline-ternary": ["off"],
     quotes: [
       "error",
       "double",
